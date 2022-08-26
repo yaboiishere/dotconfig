@@ -1,0 +1,8 @@
+/*
+!.gitignore
+!bin/
+!foot/
+!mimeapps.list
+!nvim/
+!sway/
+!waybar/
