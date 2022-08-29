@@ -48,6 +48,28 @@ set $volume_up $onscreen_bar $(pactl set-sink-volume @DEFAULT_SINK@ +5% && $sink
 set $volume_mute $onscreen_bar $(pactl set-sink-mute @DEFAULT_SINK@ toggle && pactl get-sink-mute @DEFAULT_SINK@ | sed -En "/no/ s/.*/$($sink_volume)/p; /yes/ s/.*/0/p")
 set $mic_mute $onscreen_bar $(pactl set-source-mute @DEFAULT_SOURCE@ toggle && pactl get-source-mute @DEFAULT_SOURCE@ | sed -En "/no/ s/.*/$($source_volume)/p; /yes/ s/.*/0/p")
 
+# --locked flags allow the buttons to be used whilst the screen is locked.
+bindsym --locked XF86AudioRaiseVolume exec $volume_up
+
+bindsym --locked XF86AudioLowerVolume exec $volume_down
+
+bindsym --locked XF86AudioMute exec $volume_mute
+
+bindsym XF86AudioMicMute exec $mic_mute
+
+bindsym --locked XF86MonBrightnessUp exec $brightness_up
+
+bindsym --locked XF86MonBrightnessDown exec $brightness_down
+
+bindsym --locked XF86AudioPlay exec playerctl play-pause
+
+bindsym XF86AudioNext exec playerctl next
+
+bindsym XF86AudioPrev exec playerctl previous
+
+# Clipboard
+bindsym $mod+Shift+V exec rofi -modi "clipboard:greenclip print" -show clipboard -run-command '{cmd}' ; sleep 0.5; xdotool type $(xclip -o -selection clipboard)
+
 ###Notification daemon configuration
 set $notifications mako --font "$term-font" --text-color "$text-color" --border-color "$accent-color" --background-color "$background-color" --border-size 3 --width 400 --height 200 --padding 20 --margin 20 --default-timeout 15000
 
@@ -62,7 +84,6 @@ set $pulseaudio $term_float pulsemixer
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 #output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
 
-exec ~/.azotebg
 
 # Example configuration:
 #
@@ -74,10 +95,10 @@ exec ~/.azotebg
 #
 # Example configuration:
 #
-# exec swayidle -w \
-#          timeout 300 'swaylock -f -c 000000' \
-#          timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
-#          before-sleep 'swaylock -f -c 000000'
+exec swayidle -w \
+         timeout 300 'swaylock -f -c 000000' \
+         timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
+         before-sleep 'swaylock -f -c 000000'
 #
 # This will lock your screen after 300 seconds of inactivity, then turn off
 # your displays after another 300 seconds, and turn your screens back on when
@@ -254,4 +275,13 @@ bar {
     }
 }
 
-include /etc/sway/config.d/*
+exec foot --server
+exec ~/.azotebg
+exec autotiling
+exec sworkstyle &> /tmp/sworkstyle.log
+exec greenclip daemon
+
+exec_always '[ -x "$(command -v playerctl)" ] && pkill playerctl; playerctl -a metadata --format \'{{status}} {{title}}\' --follow | while read line; do pkill -RTMIN+5 waybar; done'
+
+
+

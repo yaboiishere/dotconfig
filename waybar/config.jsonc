@@ -18,9 +18,9 @@
             "4:work": "",
             "5:music": "",
             "6:docs": "",
-            "urgent": "",
-            "focused": "",
-            "default": ""
+            "urgent": ""
+            // "focused": "",
+            // "default": ""
         }
     },
     "sway/mode": {
