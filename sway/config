@@ -4,6 +4,30 @@
 #
 # Read `man 5 sway` for a complete reference.
 
+#
+# Status Bar:
+#
+# Read `man 5 sway-bar` for more information about this section.
+bar {
+    swaybar_command waybar
+    position top
+
+    # When the status_command prints a new line to stdout, swaybar updates.
+    # The default just shows the current date and time.
+    # status_command while date +'%Y-%m-%d %I:%M:%S %p'; do sleep 1; done
+
+    colors {
+        statusline #ffffff
+        background #323232
+        inactive_workspace #32323200 #32323200 #5c5c5c
+    }
+}
+
+input "type:keyboard" {
+    xkb_options caps:hyper
+    xkb_layout	us
+}
+# exec_always xmodmap -e "keycode 66 = F13 NoSymbol F13"
 ### Variables
 #
 # Logo key. Use Mod1 for Alt.
@@ -20,6 +44,10 @@ set $term foot
 # on the original workspace that the command was run on.
 set $menu "rofi -i -modi drun,run -show drun"
 
+#Screenshots
+bindsym --release Print exec grim -g \"$(slurp)\" - | wl-copy
+bindsym --release Shift+Print exec  grim -g "$(slurp)" - | swappy -f - -o - | pngquant - | wl-copy
+
 #Theme
 set $gtk-theme Matcha-dark-sea
 set $icon-theme Papirus-Dark-Maia
@@ -31,6 +59,10 @@ default_border none
 bindsym $mod+n exec sway-new-workspace open
 bindsym $mod+Shift+n exec sway-new-workspace move
 bindsym $mod+Shift+d exec sway-new-workspace open; exec $menu
+
+#Move workspaces between monitors
+bindsym $mod+Control+Shift+Right move workspace to output right
+bindsym $mod+Control+Shift+Left move workspace to output left
 
 # onscreen bar
 set $onscreen_bar bash ~/.config/sway/wob.sh "$accent-colorFF" "$background-colorFF"
@@ -71,7 +103,9 @@ bindsym XF86AudioPrev exec playerctl previous
 bindsym $mod+Shift+V exec rofi -modi "clipboard:greenclip print" -show clipboard -run-command '{cmd}' ; sleep 0.5; xdotool type $(xclip -o -selection clipboard)
 
 ###Notification daemon configuration
-set $notifications mako --font "$term-font" --text-color "$text-color" --border-color "$accent-color" --background-color "$background-color" --border-size 3 --width 400 --height 200 --padding 20 --margin 20 --default-timeout 15000
+# set $notifications mako --font "$term-font" --text-color "$text-color" --border-color "$accent-color" --background-color "$background-color" --border-size 3 --width 400 --height 200 --padding 20 --margin 20 --default-timeout 15000
+
+bindsym $mod+Shift+P exec swaync-client -t -sw
 
 # statusbar command
 set $statusbar waybar
@@ -256,32 +290,28 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
-#
-# Status Bar:
-#
-# Read `man 5 sway-bar` for more information about this section.
-bar {
-    swaybar_command waybar
-    position top
-
-    # When the status_command prints a new line to stdout, swaybar updates.
-    # The default just shows the current date and time.
-    # status_command while date +'%Y-%m-%d %I:%M:%S %p'; do sleep 1; done
-
-    colors {
-        statusline #ffffff
-        background #323232
-        inactive_workspace #32323200 #32323200 #5c5c5c
-    }
-}
 
 exec foot --server
 exec ~/.azotebg
 exec autotiling
 exec sworkstyle &> /tmp/sworkstyle.log
 exec greenclip daemon
-
+exec swaync
+exec sway-alttab
+exec logiops
 exec_always '[ -x "$(command -v playerctl)" ] && pkill playerctl; playerctl -a metadata --format \'{{status}} {{title}}\' --follow | while read line; do pkill -RTMIN+5 waybar; done'
 
+#Autostart
+exec move workspace number 9 to output right
+exec --no-startup-id swaymsg "workspace 9; exec discord"
+exec --no-startup-id swaymsg "workspace 9; exec spotify-launcher"
 
+exec move workspace number 2 to output right
+exec --no-startup-id swaymsg "workspace 2; exec google-chrome-stable"
 
+#PTT
+bindsym XF86Tools exec xdotool keydown XF86Tools
+bindsym --release XF86Tools exec xdotool keyup XF86Tools
+
+bindsym Hyper_L exec xdotool keydown Hyper_L
+bindsym --release Hyper_L exec xdotool keyup Hyper_L
