@@ -24,9 +24,10 @@ bar {
 }
 
 input "type:keyboard" {
-    xkb_options caps:hyper
-    xkb_layout	us
+    xkb_options caps:none,grp:alt_shift_toggle
+    xkb_layout	us,bg(phonetic)
 }
+
 # exec_always xmodmap -e "keycode 66 = F13 NoSymbol F13"
 ### Variables
 #
@@ -297,21 +298,17 @@ exec autotiling
 exec sworkstyle &> /tmp/sworkstyle.log
 exec greenclip daemon
 exec swaync
-exec sway-alttab
 exec logiops
 exec_always '[ -x "$(command -v playerctl)" ] && pkill playerctl; playerctl -a metadata --format \'{{status}} {{title}}\' --follow | while read line; do pkill -RTMIN+5 waybar; done'
 
 #Autostart
+exec move workspace number 2 to output right
+exec --no-startup-id swaymsg "workspace 2; exec google-chrome-stable"
 exec move workspace number 9 to output right
 exec --no-startup-id swaymsg "workspace 9; exec discord"
 exec --no-startup-id swaymsg "workspace 9; exec spotify-launcher"
 
-exec move workspace number 2 to output right
-exec --no-startup-id swaymsg "workspace 2; exec google-chrome-stable"
 
 #PTT
-bindsym XF86Tools exec xdotool keydown XF86Tools
-bindsym --release XF86Tools exec xdotool keyup XF86Tools
-
-bindsym Hyper_L exec xdotool keydown Hyper_L
-bindsym --release Hyper_L exec xdotool keyup Hyper_L
+bindcode 66 exec xdotool keydown 66 
+bindcode --release 66 exec xdotool keyup 66
