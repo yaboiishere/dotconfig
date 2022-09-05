@@ -6,7 +6,7 @@
     // Choose the order of the modules
     "modules-left": ["sway/workspaces", "sway/mode", "custom/spotify"],
     "modules-center": ["sway/window"],
-    "modules-right": ["pulseaudio", "network", "bluetooth", "cpu", "memory", "battery", "tray", "sway/language", "clock"],
+    "modules-right": ["pulseaudio", "network", "bluetooth", "cpu", "memory", "battery", "tray","custom/weather", "sway/language", "clock"],
     "sway/workspaces": {
         "disable-scroll": true,
         "all-outputs": false,
@@ -31,7 +31,7 @@
         "spacing": 10
     },
     "clock": {
-        "format-alt": "{:%Y-%m-%d}"
+        "format": "{:%H:%M:%S %m/%d/%Y}",
     },
     "cpu": {
         "format": "{usage}% "
@@ -88,8 +88,15 @@
     "custom/spotify": {
         "format": " {}",
         "max-length": 40,
-        "interval": 30, // Remove this if your script is endless and write in loop
         "exec": "$HOME/.config/waybar/mediaplayer.sh 2> /dev/null", // Script in resources folder
         "exec-if": "pgrep spotify"
+    },
+    "custom/weather": {
+        "format": " {}",
+        "tooltip": true,
+        "max-length": 40,
+        "interval": 30, // Remove this if your script is endless and write in loop
+        "exec": "$HOME/.local/bin/weather-waybar", // Script in resources folder
+        "return-type": "json"
     }
 }

@@ -1,8 +1,11 @@
 " Plugins
 call plug#begin('~/.config/nvim/plugged')
-Plug 'junnplus/lsp-setup.nvim'
+
+" Misc helper functions (dependency of popular plugins)
+Plug 'nvim-lua/plenary.nvim'
 
 " LSP
+Plug 'junnplus/lsp-setup.nvim'
 Plug 'neovim/nvim-lspconfig'
 Plug 'williamboman/mason.nvim'
 Plug 'williamboman/mason-lspconfig.nvim'
@@ -18,18 +21,11 @@ Plug 'hrsh7th/cmp-path'
 Plug 'L3MON4D3/LuaSnip'
 Plug 'saadparwaiz1/cmp_luasnip'
 
+" Syntax highlighting
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/playground'
 
-" PureScript
-Plug 'purescript-contrib/purescript-vim'
-
-" Plug 'w0rp/ale'
-" let g:ale_linters = {'haskell': ['hlint'], 'elixir': [], 'javascript': []}
-" let g:ale_haskell_ghc_options = '-fno-code -v0 -isrc'
-Plug 'mileszs/ack.vim'
-let g:ackprg = 'rg --smart-case --vimgrep'
-
+" Misc. motions/text search
 Plug 'easymotion/vim-easymotion'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
@@ -40,12 +36,13 @@ Plug 'int3/vim-extradite'
 
 Plug 'airblade/vim-gitgutter'
 
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-let g:fzf_buffers_jump = 1
+" Fuzzy searching
+Plug 'nvim-telescope/telescope-fzf-native.nvim'
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
 
 Plug 'powerman/vim-plugin-AnsiEsc'
 
+" Statusline
 Plug 'itchyny/lightline.vim'
 let g:lightline = {
       \ 'active': {
@@ -68,7 +65,7 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 " Jump to last position when reopening files
 Plug 'farmergreg/vim-lastplace'
 
-" Colorscheme
+" Colorschemes
 Plug 'liuchengxu/space-vim-dark'
 Plug 'nanotech/jellybeans.vim'
 Plug 'whatyouhide/vim-gotham'
@@ -93,17 +90,20 @@ Plug 'kevinhwang91/nvim-bqf'
 Plug 'github/copilot.vim'
 
 let g:copilot_filetypes = {
+      \ 'dap-repl': v:false,
+      \ 'dapui_watches': v:false,
       \ '*': v:true
       \ }
-
-" Jira
-" Plug 'n0v1c3/vira', { 'do': './install.sh' }
-" let g:vira_config_file_servers = $HOME . '/.config/vira/vira_servers.json'
-" let g:vira_config_file_projects = $HOME . '/.config/vira/vira_projects.json'
 
 " GitHub
 Plug 'ldelossa/litee.nvim'
 Plug 'ldelossa/gh.nvim'
+
+" Debugging
+Plug 'mfussenegger/nvim-dap'
+Plug 'GoNZooo/nvim-dap-ui', { 'branch': 'gonz.fix-nil-index' }
+Plug 'theHamsta/nvim-dap-virtual-text'
+
 call plug#end()
 
 set mouse=""
@@ -188,22 +188,6 @@ map <leader>et :tabe %%
 map <leader>ev :vsp %%
 " New window from horizontal split
 map <leader>es :sp %%
-
-" Fzf
-map <C-p> :Files<CR>
-map <C-g> :GFiles<CR>
-map <leader>ff :Files<CR>
-map <leader>fF :Files!<CR>
-map <leader>gf :GFiles<CR>
-map <leader>gF :GFiles!<CR>
-map <leader>gc :GFiles?<CR>
-"map <C-b> :Buffers<CR>
-map <leader>bb :Buffers<CR>
-map <leader>bB :Buffers!<CR>
-map <leader>cf :Commits<CR>
-map <leader>cF :Commits!<CR>
-map <leader>/ :Rg 
-map <leader>* :Rg <c-r>=expand("<cword>")<CR>
 
 " Map tilde (above TAB) to exit insert mode and visual mode
 " For some reason it will actually press enter when trying to exit
