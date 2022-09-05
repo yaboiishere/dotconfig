@@ -31,6 +31,7 @@
         "spacing": 10
     },
     "clock": {
+        "interval": 1,
         "format": "{:%H:%M:%S %m/%d/%Y}",
     },
     "cpu": {
@@ -63,8 +64,8 @@
         "format-muted": "",
         "format-icons": {
             "headphones": "",
-            "handsfree": "",
-            "headset": "",
+            "handsfree": "",
+            "headset": "",
             "phone": "",
             "portable": "",
             "car": "",
@@ -86,10 +87,18 @@
         "on-click": "swaymsg input $(swaymsg -t get_inputs --raw | jq '[.[] | select(.type == \"keyboard\")][0] | .identifier') xkb_switch_layout next"
     },
     "custom/spotify": {
-        "format": " {}",
+        "format": "{icon} {}",
+        "return-type": "json",
         "max-length": 40,
-        "exec": "$HOME/.config/waybar/mediaplayer.sh 2> /dev/null", // Script in resources folder
-        "exec-if": "pgrep spotify"
+        "format-icons": {
+            "spotify": "",
+            "default": "🎜"
+        },
+        "exec": "python $HOME/.config/waybar/mediaplayer.py 2> /dev/null", // Script in resources folder
+        // "exec": "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
+        "on-click": "playerctl play-pause",
+        "on-scroll-up": "playerctl next",
+        "on-scroll-down": "playerctl previous"
     },
     "custom/weather": {
         "format": " {}",
