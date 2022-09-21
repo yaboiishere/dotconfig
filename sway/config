@@ -291,7 +291,8 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
-
+# exec --no-startup-id dbus-update-activation-environment --all
+exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
 exec foot --server
 exec ~/.azotebg
 exec autotiling
@@ -302,13 +303,19 @@ exec logiops
 exec_always '[ -x "$(command -v playerctl)" ] && pkill playerctl; playerctl -a metadata --format \'{{status}} {{title}}\' --follow | while read line; do pkill -RTMIN+5 waybar; done'
 
 #Autostart
-exec move workspace number 2 to output right
 exec --no-startup-id swaymsg "workspace 2; exec google-chrome-stable"
-exec move workspace number 9 to output right
+
+exec --no-startup-id swaymsg "workspace 8; exec thunderbird"
+exec --no-startup-id swaymsg "workspace 8; exec rocketchat-desktop"
+exec --no-startup-id swaymsg "workspace 8; exec slack"
+
 exec --no-startup-id swaymsg "workspace 9; exec discord"
-exec --no-startup-id swaymsg "workspace 9; exec spotify-launcher"
+exec --no-startup-id swaymsg "workspace 9; exec spotify"
 
 
 #PTT
-bindcode 66 exec xdotool keydown 66 
-bindcode --release 66 exec xdotool keyup 66
+# bindcode 66 exec xdotool keydown F13
+# bindcode --release 66 exec xdotool keyup F13
+
+bindcode 66 exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ 0
+bindcode --release 66 exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ 1

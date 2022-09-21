@@ -98,6 +98,7 @@ let g:copilot_filetypes = {
 " GitHub
 Plug 'ldelossa/litee.nvim'
 Plug 'ldelossa/gh.nvim'
+Plug 'APZelos/blamer.nvim'
 
 " Debugging
 Plug 'mfussenegger/nvim-dap'
@@ -226,9 +227,18 @@ highlight link GitGutterDelete GutterSignDelete
 nmap <leader>GG :Git<CR>
 nmap <leader>GP :Git push<CR>
 
+" Git Blame
+let g:blamer_enabled = 1
+let g:blamer_relative_time = 1
+let g:blamer_delay = 100
+highlight Blamer guifg=lightgrey
+
 " Load our lua config
 lua require("config")
 
 " Enable per-project configurations
 set exrc
 set secure
+
+" Nerd tree toggle
+nnoremap <C-t> :NERDTreeToggle<CR>
