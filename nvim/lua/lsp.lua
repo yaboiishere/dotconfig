@@ -30,8 +30,8 @@ null_ls.setup({
 local on_attach = function(client, bufnr)
   -- Disable formatting for tsserver (this should be handled by null-ls)
   if client.name == "tsserver" then
-    client.resolved_capabilities.document_formatting = false
-    client.resolved_capabilities.document_range_formatting = false
+    client.server_capabilities.document_formatting = false
+    client.server_capabilities.document_range_formatting = false
   end
 
   -- Mappings.
@@ -63,7 +63,7 @@ local lsp_flags = {
 }
 --
 -- Setup lspconfig.
-local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 lspconfig.sumneko_lua.setup {
   on_attach = on_attach, flags = lsp_flags, capabilities = capabilities
