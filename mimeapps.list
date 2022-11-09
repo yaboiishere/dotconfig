@@ -9,12 +9,7 @@ message/rfc822=userapp-Thunderbird-6B8LR1.desktop
 x-scheme-handler/mid=userapp-Thunderbird-6B8LR1.desktop
 x-scheme-handler/jetbrains=jetbrains-toolbox.desktop
 x-scheme-handler/postman=Postman.desktop
-x-scheme-handler/msteams=teams.desktop
-x-scheme-handler/tg=userapp-Telegram Desktop-JG0MT1.desktop
-x-scheme-handler/fleet=jetbrains-fleet.desktop
-x-scheme-handler/jetbrains-gateway=jetbrains-gateway.desktop
 
 [Added Associations]
 x-scheme-handler/mailto=userapp-Thunderbird-6B8LR1.desktop;
 x-scheme-handler/mid=userapp-Thunderbird-6B8LR1.desktop;
-x-scheme-handler/tg=userapp-Telegram Desktop-JG0MT1.desktop;

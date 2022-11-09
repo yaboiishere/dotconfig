@@ -23,9 +23,6 @@ null_ls.setup({
       vim.cmd("xnoremap <silent><buffer> <Leader>f :lua vim.lsp.buf.range_formatting({})<CR>")
     end
   end,
-  sources = {
-    null_ls.builtins.formatting.black.with({ extra_args = { "--fast" } }),
-  },
 })
 
 -- Use an on_attach function to only map the following keys
@@ -72,7 +69,9 @@ lspconfig.sumneko_lua.setup {
   on_attach = on_attach, flags = lsp_flags, capabilities = capabilities
 }
 
-lspconfig.pyright.setup { on_attach = on_attach, flags = lsp_flags, capabilities = capabilities }
+lspconfig.pyright.setup {
+  on_attach = on_attach, flags = lsp_flags, capabilities = capabilities
+}
 lspconfig.tsserver.setup { on_attach = on_attach, flags = lsp_flags, capabilities = capabilities }
 
 lspconfig.hls.setup {
