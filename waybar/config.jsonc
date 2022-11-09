@@ -94,11 +94,11 @@
             "spotify": "",
             "default": "🎜"
         },
-        "exec": "python $HOME/.config/waybar/mediaplayer.py 2> /dev/null", // Script in resources folder
+        "exec": "python $HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null", // Script in resources folder
         // "exec": "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
-        "on-click": "playerctl play-pause",
-        "on-scroll-up": "playerctl next",
-        "on-scroll-down": "playerctl previous"
+        "on-click": "playerctl --player spotify play-pause",
+        "on-scroll-up": "playerctl --player spotify next",
+        "on-scroll-down": "playerctl --player spotify previous"
     },
     "custom/weather": {
         "format": "{}",
