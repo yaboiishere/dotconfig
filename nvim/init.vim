@@ -10,6 +10,10 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'williamboman/mason.nvim'
 Plug 'williamboman/mason-lspconfig.nvim'
 Plug 'williamboman/nvim-lsp-installer'
+Plug 'onsails/lspkind.nvim'
+" TypeScript extras
+Plug 'jose-elias-alvarez/null-ls.nvim'
+Plug 'MunifTanjim/prettier.nvim'
 
 " Completion engine
 Plug 'hrsh7th/nvim-cmp'
@@ -24,6 +28,8 @@ Plug 'saadparwaiz1/cmp_luasnip'
 " Syntax highlighting
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/playground'
+Plug 'p00f/nvim-ts-rainbow'
+
 
 " Misc. motions/text search
 Plug 'easymotion/vim-easymotion'
@@ -43,18 +49,7 @@ Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
 Plug 'powerman/vim-plugin-AnsiEsc'
 
 " Statusline
-Plug 'itchyny/lightline.vim'
-let g:lightline = {
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
-      \   'right': [ [ 'lineinfo' ],
-      \              [ 'fileformat', 'filetype' ] ]
-      \ },
-      \ 'component_function': {
-      \   'gitbranch': 'fugitive#head'
-      \ },
-      \ }
+Plug 'nvim-lualine/lualine.nvim'
 set laststatus=2
 
 " File browsing, enhanced netrw
@@ -104,6 +99,14 @@ Plug 'APZelos/blamer.nvim'
 Plug 'mfussenegger/nvim-dap'
 Plug 'GoNZooo/nvim-dap-ui', { 'branch': 'gonz.fix-nil-index' }
 Plug 'theHamsta/nvim-dap-virtual-text'
+
+"""
+" Language-specific plugins
+"""
+
+" D / DLang
+" Syntax-highlighting
+Plug 'JesseKPhillips/d.vim'
 
 call plug#end()
 
