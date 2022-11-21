@@ -52,8 +52,12 @@ Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
 Plug 'powerman/vim-plugin-AnsiEsc'
 
 " Statusline
-Plug 'nvim-lualine/lualine.nvim'
-set laststatus=2
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline_theme='deus'
 
 " File browsing, enhanced netrw
 Plug 'tpope/vim-vinegar'

@@ -1,4 +1,5 @@
 require("nvim-lsp-installer").setup {}
+require 'lspconfig'.clangd.setup {}
 
 local lspconfig = require("lspconfig")
 
@@ -124,7 +125,9 @@ prettier.setup({
 
 vim.cmd [[autocmd BufWritePre *.lua lua vim.lsp.buf.formatting_sync()]]
 vim.cmd [[autocmd BufWritePre *.hs lua vim.lsp.buf.formatting_sync()]]
--- vim.cmd [[autocmd BufWritePre *.tsx? <Plug>(prettier-format)]]
+vim.cmd [[autocmd BufWritePre *.c lua vim.lsp.buf.formatting_sync()]]
+vim.cmd [[autocmd BufWritePre *.cpp lua vim.lsp.buf.formatting_sync()]]
+vim.cmd [[autocmd BufWritePre *.h lua vim.lsp.buf.formatting_sync()]]
 -- vim.cmd [[autocmd BufWritePre *.md lua vim.lsp.buf.formatting_sync()]]
 -- vim.cmd [[autocmd BufWritePre *.py lua vim.lsp.buf.formatting_sync()]]
 
