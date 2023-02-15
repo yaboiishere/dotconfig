@@ -23,6 +23,7 @@ Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
+Plug 'onsails/lspkind.nvim'
 
 " Snippets
 Plug 'L3MON4D3/LuaSnip'
@@ -31,6 +32,7 @@ Plug 'saadparwaiz1/cmp_luasnip'
 " Syntax highlighting
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/playground'
+Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'p00f/nvim-ts-rainbow'
 
 
@@ -110,6 +112,9 @@ Plug 'theHamsta/nvim-dap-virtual-text'
 " Silly Python bullshit
 Plug 'ahmedkhalf/jupyter-nvim', { 'do': ':UpdateRemotePlugins' }
 
+" Comments
+Plug 'numToStr/Comment.nvim'
+
 """
 " Language-specific plugins
 """
@@ -117,6 +122,12 @@ Plug 'ahmedkhalf/jupyter-nvim', { 'do': ':UpdateRemotePlugins' }
 " D / DLang
 " Syntax-highlighting
 Plug 'JesseKPhillips/d.vim'
+
+" Dhall
+Plug 'vmchale/dhall-vim'
+
+" PureScript
+Plug 'purescript-contrib/purescript-vim'
 
 call plug#end()
 

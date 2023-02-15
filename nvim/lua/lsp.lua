@@ -1,5 +1,4 @@
 require("nvim-lsp-installer").setup {}
-require 'lspconfig'.clangd.setup {}
 
 local lspconfig = require("lspconfig")
 
@@ -17,7 +16,7 @@ null_ls.setup({
   on_attach = function(client, _) -- client, bufnr
     if client.server_capabilities.documentFormattingProvider then
       -- format on save
-      vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting()")
+      vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.format {async = true}")
     end
 
     if client.server_capabilities.documentRangeFormattingProvider then
@@ -34,8 +33,8 @@ null_ls.setup({
 local on_attach = function(client, bufnr)
   -- Disable formatting for tsserver (this should be handled by null-ls)
   if client.name == "tsserver" then
-    client.server_capabilities.document_formatting = false
-    client.server_capabilities.document_range_formatting = false
+    client.resolved_capabilities.document_formatting = false
+    client.resolved_capabilities.document_range_formatting = false
   end
 
   -- Mappings.
@@ -91,10 +90,6 @@ lspconfig.hls.setup {
   }
 }
 
-lspconfig.kotlin_language_server.setup {
-  on_attach = on_attach, flags = lsp_flags, capabilities = capabilities
-}
-
 lspconfig.jsonls.setup {
   on_attach = on_attach, flags = lsp_flags, capabilities = capabilities
 }
@@ -103,7 +98,28 @@ lspconfig.eslint.setup { on_attach = on_attach, flags = lsp_flags, capabilities 
 
 lspconfig.elixirls.setup { on_attach = on_attach, flags = lsp_flags, capabilities = capabilities }
 
+lspconfig.erlangls.setup { on_attach = on_attach, flags = lsp_flags, capabilities = capabilities }
+
 lspconfig.serve_d.setup { on_attach = on_attach, flags = lsp_flags, capabilities = capabilities }
+
+lspconfig.purescriptls.setup {
+  on_attach = on_attach,
+  flags = lsp_flags,
+  capabilities = capabilities,
+  settings = {
+    ["purescript"] = {
+      ["formatter"] = "tidy",
+      ["addImportOnCompletion"] = true,
+      ["codegenTargets"] = { "corefn" }
+    }
+  }
+}
+
+lspconfig.rust_analyzer.setup {
+  on_attach = on_attach, flags = lsp_flags, capabilities = capabilities
+}
+
+lspconfig.clangd.setup { on_attach = on_attach, flags = lsp_flags, capabilities = capabilities }
 
 local prettier = require("prettier")
 
@@ -123,13 +139,40 @@ prettier.setup({
   },
 })
 
+-- Lua
 vim.cmd [[autocmd BufWritePre *.lua lua vim.lsp.buf.formatting_sync()]]
+
+-- Haskell
 vim.cmd [[autocmd BufWritePre *.hs lua vim.lsp.buf.formatting_sync()]]
+
+-- PureScript
+vim.cmd [[autocmd BufWritePre *.purs lua vim.lsp.buf.formatting_sync()]]
+
+-- Erlang
+-- vim.cmd [[autocmd BufWritePre *.erl lua vim.lsp.buf.formatting_sync()]]
+-- vim.cmd [[autocmd BufWritePre *.hrl lua vim.lsp.buf.formatting_sync()]]
+
+-- Elixir
+vim.cmd [[autocmd BufWritePre *.ex lua vim.lsp.buf.formatting_sync()]]
+vim.cmd [[autocmd BufWritePre *.exs lua vim.lsp.buf.formatting_sync()]]
+
+-- Rust
+vim.cmd [[autocmd BufWritePre *.rs lua vim.lsp.buf.formatting_sync()]]
+
+-- C
 vim.cmd [[autocmd BufWritePre *.c lua vim.lsp.buf.formatting_sync()]]
-vim.cmd [[autocmd BufWritePre *.cpp lua vim.lsp.buf.formatting_sync()]]
 vim.cmd [[autocmd BufWritePre *.h lua vim.lsp.buf.formatting_sync()]]
--- vim.cmd [[autocmd BufWritePre *.md lua vim.lsp.buf.formatting_sync()]]
--- vim.cmd [[autocmd BufWritePre *.py lua vim.lsp.buf.formatting_sync()]]
+
+-- C++
+vim.cmd [[autocmd BufWritePre *.cpp lua vim.lsp.buf.formatting_sync()]]
+vim.cmd [[autocmd BufWritePre *.hpp lua vim.lsp.buf.formatting_sync()]]
+vim.cmd [[autocmd BufWritePre *.cc lua vim.lsp.buf.formatting_sync()]]
+vim.cmd [[autocmd BufWritePre *.hh lua vim.lsp.buf.formatting_sync()]]
+vim.cmd [[autocmd BufWritePre *.cxx lua vim.lsp.buf.formatting_sync()]]
+vim.cmd [[autocmd BufWritePre *.hxx lua vim.lsp.buf.formatting_sync()]]
+
+-- Rust
+vim.cmd [[autocmd BufWritePre *.rs lua vim.lsp.buf.formatting_sync()]]
 
 local disable_auto_formatting = function()
   vim.cmd [[autocmd WinEnter <buffer> set eventignore+=BufWritePre]]
